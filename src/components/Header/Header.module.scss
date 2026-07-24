@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+  margin: auto;
+
+  .mainImg {
+    width: 40px;
+    height: 40px;
+    top: 128px;
+    left: 130px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h1 {
+    width: 180px;
+    height: 24px;
+    font-family: inherit;
+    font-size: 20px;
+  }
+
+  h3 {
+    display: flex;
+    margin-left: 2rem;
+    font-size: 14px;
+    color: #9d9d9d;
+    width: 189px;
+    height: 17px;
+  }
+
+  .cartImg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .heartImg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .humanImg {
+    width: 18px;
+    height: 18px;
+  }
+}

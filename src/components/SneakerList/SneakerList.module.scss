@@ -1,0 +1,19 @@
+.sneakerList {
+  .searchContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      padding-left: 2rem;
+      font-size: 2.5rem;
+    }
+    .inp {
+      border-radius: 16px;
+      font-size: 1.5rem;
+      margin-right: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+}
