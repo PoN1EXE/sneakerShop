@@ -56,7 +56,7 @@
     }
 
     h3 {
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 600;
       color: #1e293b;
       margin: 0 0 0.25rem;
@@ -65,9 +65,9 @@
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 700;
-      color: #0f172a;
+      color: #7f7f7f;
       margin: 0.25rem 0 0.75rem;
     }
 
@@ -79,11 +79,16 @@
     }
 
     .buttonAdd {
-      background: #32363d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
       color: #fff;
       border: none;
       padding: 0.5rem 1.8rem;
-      border-radius: 30px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
@@ -98,11 +103,17 @@
       }
     }
     .buttonFav {
-      background: #32363d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: #7f7f7f;
+      background: #ffffff;
       color: #fff;
       border: none;
       padding: 0.5rem 1.8rem;
-      border-radius: 30px;
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
@@ -120,8 +131,6 @@
   .customImg {
     width: 20px;
     height: 20px;
-    top: 128px;
-    left: 130px;
     display: flex;
     justify-content: space-between;
   }

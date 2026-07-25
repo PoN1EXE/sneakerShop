@@ -1,47 +1,84 @@
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 32px;
-  margin: auto;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e9edf2;
+  border-radius: 2rem;
+}
 
-  .mainImg {
-    width: 40px;
-    height: 40px;
-    top: 128px;
-    left: 130px;
-    display: flex;
-    justify-content: space-between;
-  }
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
 
-  h1 {
-    width: 180px;
+.logoRaw {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mainImg {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: #1e293b;
+}
+
+h3 {
+  font-size: 0.85rem;
+  color: #9d9d9d;
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.headerRight {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.iconLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #1e293b;
+  transition: color 0.2s;
+  gap: 0.2rem;
+
+  img {
+    width: 24px;
     height: 24px;
-    font-family: inherit;
-    font-size: 20px;
+    object-fit: contain;
+    display: block;
   }
 
-  h3 {
-    display: flex;
-    margin-left: 2rem;
-    font-size: 14px;
-    color: #9d9d9d;
-    width: 189px;
-    height: 17px;
+  span {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #64748b;
   }
 
-  .cartImg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .heartImg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .humanImg {
-    width: 18px;
-    height: 18px;
+  &:hover {
+    color: #3b82f6;
+    span {
+      color: #3b82f6;
+    }
   }
 }

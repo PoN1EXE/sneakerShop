@@ -29,7 +29,7 @@ export const SneakerList = () => {
             <li className={styles.cardItem} key={sneaker.id}>
               <img className={styles.Pic} src={sneaker.imageUrl} />
               <h3>{sneaker.title}</h3>
-              <p>{sneaker.price}</p>
+              <p>Цена:{sneaker.price}</p>
               <div className={styles.buttonContainer}>
                 <button className={styles.buttonFav}>
                   <img className={styles.customImg} src='/src/assets/headerIcon/heartIcon.png' />
