@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useSneakers } from './../../hooks/useSneakers'
 import styles from './SneakerList.module.scss'
+import { useCartStore } from '../../store/cartStore'
 
 export const SneakerList = () => {
   const [search, setSearch] = useState('')
   const { data, isLoading, isError, error } = useSneakers()
+  const addToCart = useCartStore((state) => state.addToCart)
 
   if (isLoading) return <div>Загрузка...</div>
   if (isError) return <div>Ошибка... {error.message}</div>
@@ -38,7 +40,7 @@ export const SneakerList = () => {
               <div className={styles.cardFooter}>
                 <p>Цена:</p>
                 <span className={styles.price}>{sneaker.price}</span>
-                <button className={styles.buttonAdd}>
+                <button onClick={() => addToCart(sneaker)} className={styles.buttonAdd}>
                   <img
                     className={styles.customImg}
                     src='/src/assets/headerIcon/shopCart.png'

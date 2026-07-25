@@ -3,13 +3,12 @@ import { useCartStore } from '../../store/cartStore'
 import styles from './CartModal.module.scss'
 
 export const CartModal = () => {
-  const { isCartOpen, closeCart } = useCartStore()
+  const { isCartOpen, closeCart, items, removeFromCart } = useCartStore()
 
   useEffect(() => {
     if (isCartOpen) {
       document.body.style.overflow = 'hidden'
-    }
-    {
+    } else {
       document.body.style.overflow = 'auto'
     }
     return () => {
@@ -22,9 +21,14 @@ export const CartModal = () => {
       if (e.key === 'Escape') closeCart()
     }
     document.addEventListener('keydown', escapeHandler)
+    return () => document.removeEventListener('keydown', escapeHandler)
   }, [closeCart])
 
   if (!isCartOpen) return null
+
+  const totalPrice = items.reduce((sum, item) => sum + item.price, 0)
+  const nalog = 1.05
+  const priceWithNalog = totalPrice * nalog
 
   return (
     <div className={styles.overlay} onClick={closeCart}>
@@ -32,11 +36,38 @@ export const CartModal = () => {
         <button className={styles.closeBtn} onClick={closeCart}>
           ✕
         </button>
-        <h2>Корзина</h2>
-        <div className={styles.content}>
-          <p>Корзина пока пуста</p>
-          {/*СПИСОК КРОССОВОК ЧТО КИНУЛИ В КОРЗИНУ*/}
-        </div>
+
+        <h2 className={styles.title}>Корзина</h2>
+
+        {items.length === 0 ? (
+          <p className={styles.empty}>Корзина пуста</p>
+        ) : (
+          <>
+            <div className={styles.itemsList}>
+              {items.map((item) => (
+                <div key={item.id} className={styles.cartItem}>
+                  <img className={styles.itemImage} src={item.imageUrl} alt={item.title} />
+                  <div className={styles.itemInfo}>
+                    <span className={styles.itemTitle}>{item.title}</span>
+                    <span className={styles.itemPrice}>{item.price} руб.</span>
+                  </div>
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => removeFromCart(item.id)}
+                    aria-label='Удалить товар'>
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.footer}>
+              <span className={styles.total}>Итого: {totalPrice} руб.</span>
+              <span className={styles.total}>Налог 5%: {priceWithNalog} </span>
+              <button className={styles.checkoutBtn}>Оформить заказ</button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
