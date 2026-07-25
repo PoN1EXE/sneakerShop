@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import styles from './Header.module.scss'
+import { useCartStore } from '../../store/cartStore'
 
 export const Header = () => {
+  const openModal = useCartStore((state) => state.openCart)
+
   return (
     <header className={styles.header}>
       <div className={styles.headerLeft}>
@@ -16,10 +19,10 @@ export const Header = () => {
         </Link>
       </div>
       <div className={styles.headerRight}>
-        <Link to='/cart' className={styles.iconLink}>
+        <button onClick={openModal} className={styles.iconLink}>
           <img src='/src/assets/headerIcon/shopCart.png' alt='Корзина' />
           <span>Корзина</span>
-        </Link>
+        </button>
         <Link to='/favorites' className={styles.iconLink}>
           <img src='/src/assets/headerIcon/heartIcon.png' alt='Закладки' />
           <span>Закладки</span>

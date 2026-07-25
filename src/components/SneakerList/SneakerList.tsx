@@ -27,15 +27,23 @@ export const SneakerList = () => {
         <ul className={styles.grid}>
           {filteredData?.map((sneaker) => (
             <li className={styles.cardItem} key={sneaker.id}>
-              <img className={styles.Pic} src={sneaker.imageUrl} />
-              <h3>{sneaker.title}</h3>
-              <p>Цена:{sneaker.price}</p>
-              <div className={styles.buttonContainer}>
+              <div className={styles.imageWrapper}>
+                <img className={styles.Pic} src={sneaker.imageUrl} alt={sneaker.title} />
                 <button className={styles.buttonFav}>
-                  <img className={styles.customImg} src='/src/assets/headerIcon/heartIcon.png' />
+                  <img className={styles.customImg} src='/src/assets/headerIcon/heartIcon.png' alt='В избранное' />
                 </button>
+              </div>
+
+              <h3>{sneaker.title}</h3>
+              <div className={styles.cardFooter}>
+                <p>Цена:</p>
+                <span className={styles.price}>{sneaker.price}</span>
                 <button className={styles.buttonAdd}>
-                  <img className={styles.customImg} src='/src/assets/headerIcon/shopCart.png' />
+                  <img
+                    className={styles.customImg}
+                    src='/src/assets/headerIcon/shopCart.png'
+                    alt='Добавить в корзину'
+                  />
                 </button>
               </div>
             </li>
