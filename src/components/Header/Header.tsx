@@ -1,6 +1,9 @@
+import shopCart from '/src/assets/headerIcon/shopCart.png'
+import heartIcon from '/src/assets/headerIcon/heartIcon.png'
+import humanIcon from '/src/assets/headerIcon/heartIcon.png'
 import { Link } from 'react-router-dom'
-import styles from './Header.module.scss'
 import { useCartStore } from '../../store/cartStore'
+import styles from './Header.module.scss'
 
 export const Header = () => {
   const openModal = useCartStore((state) => state.openCart)
@@ -20,15 +23,15 @@ export const Header = () => {
       </div>
       <div className={styles.headerRight}>
         <button onClick={openModal} className={styles.iconLink}>
-          <img src='/src/assets/headerIcon/shopCart.png' alt='Корзина' />
+          <img src={shopCart} alt='Корзина' />
           <span>Корзина</span>
         </button>
         <Link to='/favorites' className={styles.iconLink}>
-          <img src='/src/assets/headerIcon/heartIcon.png' alt='Закладки' />
+          <img src={heartIcon} alt='Закладки' />
           <span>Закладки</span>
         </Link>
         <Link to='/profile' className={styles.iconLink}>
-          <img src='/src/assets/headerIcon/humanIcon.png' alt='Профиль' />
+          <img src={humanIcon} alt='Профиль' />
           <span>Профиль</span>
         </Link>
       </div>

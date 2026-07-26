@@ -14,7 +14,7 @@
 .modal {
   background: #ffffff;
   width: 420px;
-  height: 80vh;
+  height: auto;
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -146,9 +146,10 @@
 .footer {
   border-top: 2px solid #f1f5f9;
   padding-top: 1rem;
+  flex-direction: column;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   margin-top: auto;
 }
 
@@ -159,6 +160,7 @@
 }
 
 .checkoutBtn {
+  margin-top: 1rem;
   background: #3b82f6;
   color: #fff;
   border: none;

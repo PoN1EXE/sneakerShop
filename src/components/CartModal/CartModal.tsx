@@ -1,16 +1,20 @@
 import { useEffect } from 'react'
 import { useCartStore } from '../../store/cartStore'
+import { useShallow } from 'zustand/shallow'
 import styles from './CartModal.module.scss'
 
 export const CartModal = () => {
-  const { isCartOpen, closeCart, items, removeFromCart } = useCartStore()
+  const { isCartOpen, closeCart, items, removeFromCart } = useCartStore(
+    useShallow((state) => ({
+      isCartOpen: state.isCartOpen,
+      closeCart: state.closeCart,
+      items: state.items,
+      removeFromCart: state.removeFromCart,
+    }))
+  )
 
   useEffect(() => {
-    if (isCartOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
+    document.body.style.overflow = isCartOpen ? 'hidden' : 'auto'
     return () => {
       document.body.style.overflow = 'auto'
     }
@@ -27,8 +31,8 @@ export const CartModal = () => {
   if (!isCartOpen) return null
 
   const totalPrice = items.reduce((sum, item) => sum + item.price, 0)
-  const nalog = 1.05
-  const priceWithNalog = totalPrice * nalog
+  const nalog = totalPrice * 0.05
+  const priceWithNalog = totalPrice + nalog
 
   return (
     <div className={styles.overlay} onClick={closeCart}>
@@ -62,8 +66,8 @@ export const CartModal = () => {
             </div>
 
             <div className={styles.footer}>
-              <span className={styles.total}>Итого: {totalPrice} руб.</span>
-              <span className={styles.total}>Налог 5%: {priceWithNalog} </span>
+              <span className={styles.total}>Налог 5%: {nalog} </span>
+              <span className={styles.total}>Итого: {priceWithNalog} руб.</span>
               <button className={styles.checkoutBtn}>Оформить заказ</button>
             </div>
           </>

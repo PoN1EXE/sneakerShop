@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Header } from './components/Header/Header'
 import { MainPage } from './pages/MainPage'
 import { Favorites } from './pages/Favorites'
-import { ShoppingCart } from './pages/ShoppingCart'
+import { NotFound } from './pages/NotFound'
 import { Profile } from './pages/Profile'
 
 import styles from './App.module.scss'
@@ -15,8 +15,8 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<MainPage />} />
+          <Route path='*' element={<NotFound />} />
           <Route path='/favorites' element={<Favorites />} />
-          <Route path='/cart' element={<ShoppingCart />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
         <CartModal />
