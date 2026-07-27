@@ -2,14 +2,17 @@ import { useEffect } from 'react'
 import { useCartStore } from '../../store/cartStore'
 import { useShallow } from 'zustand/shallow'
 import styles from './CartModal.module.scss'
+import { QuantityControl } from '../QuantityControl/QuantityControl'
 
 export const CartModal = () => {
-  const { isCartOpen, closeCart, items, removeFromCart } = useCartStore(
+  const { isCartOpen, closeCart, items, removeFromCart, incrementQuantity, decrementQuantity } = useCartStore(
     useShallow((state) => ({
       isCartOpen: state.isCartOpen,
       closeCart: state.closeCart,
       items: state.items,
       removeFromCart: state.removeFromCart,
+      incrementQuantity: state.incrementQuantity,
+      decrementQuantity: state.decrementQuantity,
     }))
   )
 
@@ -30,7 +33,7 @@ export const CartModal = () => {
 
   if (!isCartOpen) return null
 
-  const totalPrice = items.reduce((sum, item) => sum + item.price, 0)
+  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const nalog = totalPrice * 0.05
   const priceWithNalog = totalPrice + nalog
 
@@ -55,6 +58,13 @@ export const CartModal = () => {
                     <span className={styles.itemTitle}>{item.title}</span>
                     <span className={styles.itemPrice}>{item.price} руб.</span>
                   </div>
+
+                  <QuantityControl
+                    item={item}
+                    incrementQuantity={incrementQuantity}
+                    decrementQuantity={decrementQuantity}
+                  />
+
                   <button
                     className={styles.removeBtn}
                     onClick={() => removeFromCart(item.id)}

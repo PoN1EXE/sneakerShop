@@ -1,6 +1,7 @@
 import shopCart from '/src/assets/headerIcon/shopCart.png'
 import heartIcon from '/src/assets/headerIcon/heartIcon.png'
-import humanIcon from '/src/assets/headerIcon/heartIcon.png'
+import humanIcon from '/src/assets/headerIcon/humanIcon.png'
+import logoHeader from '/src/assets/headerIcon/logoHeader.png'
 import { Link } from 'react-router-dom'
 import { useCartStore } from '../../store/cartStore'
 import styles from './Header.module.scss'
@@ -13,7 +14,7 @@ export const Header = () => {
       <div className={styles.headerLeft}>
         <Link to='/'>
           <div className={styles.logoRaw}>
-            <img className={styles.mainImg} src='/src/assets/headerIcon/logoHeader.png' alt='Кроссовочки' />
+            <img className={styles.mainImg} src={logoHeader} alt='Кроссовочки' />
             <div className={styles.textBlock}>
               <h1>REACT SNEAKERS</h1>
               <h3>Магазин лучших кроссовок</h3>

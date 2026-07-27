@@ -6,6 +6,7 @@ export interface Sneaker {
   isFavorite: boolean
   isAdded: boolean
 }
+
 export const sneakers: Sneaker[] = [
   {
     id: 'sneaker-1',
