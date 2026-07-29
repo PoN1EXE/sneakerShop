@@ -1,4 +1,5 @@
 .sneakerList {
+  padding-left: 2rem;
   .customImg {
     width: 24px;
     height: 24px;
@@ -24,6 +25,7 @@
       padding-left: 2.8rem;
       border-radius: 16px;
       font-size: 1.5rem;
+      margin-top: 1rem;
       margin-right: 2rem;
       border: 1px solid #e9edf2;
       height: 3rem;
@@ -104,6 +106,7 @@
       }
 
       &:active {
+        background: #f88989;
         transform: scale(0.92);
       }
 
@@ -112,6 +115,10 @@
         height: 20px;
         object-fit: contain;
         display: block;
+      }
+      &.active {
+        background: #f88989;
+        border-color: #f88989;
       }
     }
 
@@ -160,6 +167,9 @@
 
       &:active {
         transform: scale(0.92);
+      }
+      &.active {
+        background: #43f458;
       }
 
       img {

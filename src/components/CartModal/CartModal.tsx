@@ -1,20 +1,36 @@
 import { useEffect } from 'react'
 import { useCartStore } from '../../store/cartStore'
 import { useShallow } from 'zustand/shallow'
-import styles from './CartModal.module.scss'
 import { QuantityControl } from '../QuantityControl/QuantityControl'
+import { useOrdersStore } from '../../store/ordersStore'
+import styles from './CartModal.module.scss'
 
 export const CartModal = () => {
-  const { isCartOpen, closeCart, items, removeFromCart, incrementQuantity, decrementQuantity } = useCartStore(
-    useShallow((state) => ({
-      isCartOpen: state.isCartOpen,
-      closeCart: state.closeCart,
-      items: state.items,
-      removeFromCart: state.removeFromCart,
-      incrementQuantity: state.incrementQuantity,
-      decrementQuantity: state.decrementQuantity,
-    }))
-  )
+  const { isCartOpen, closeCart, items, removeFromCart, incrementQuantity, decrementQuantity, clearCart } =
+    useCartStore(
+      useShallow((state) => ({
+        clearCart: state.clearCart,
+        isCartOpen: state.isCartOpen,
+        closeCart: state.closeCart,
+        items: state.items,
+        removeFromCart: state.removeFromCart,
+        incrementQuantity: state.incrementQuantity,
+        decrementQuantity: state.decrementQuantity,
+      }))
+    )
+
+  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const nalog = totalPrice * 0.05
+  const priceWithNalog = totalPrice + nalog
+
+  const addOrder = useOrdersStore((state) => state.addOrder)
+
+  const handleCheckout = () => {
+    const order = { id: Date.now(), items: items, total: priceWithNalog, date: new Date().toLocaleDateString() }
+    addOrder(order)
+    clearCart()
+    closeCart()
+  }
 
   useEffect(() => {
     document.body.style.overflow = isCartOpen ? 'hidden' : 'auto'
@@ -32,10 +48,6 @@ export const CartModal = () => {
   }, [closeCart])
 
   if (!isCartOpen) return null
-
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const nalog = totalPrice * 0.05
-  const priceWithNalog = totalPrice + nalog
 
   return (
     <div className={styles.overlay} onClick={closeCart}>
@@ -78,7 +90,9 @@ export const CartModal = () => {
             <div className={styles.footer}>
               <span className={styles.total}>Налог 5%: {nalog} </span>
               <span className={styles.total}>Итого: {priceWithNalog} руб.</span>
-              <button className={styles.checkoutBtn}>Оформить заказ</button>
+              <button onClick={() => handleCheckout()} className={styles.checkoutBtn}>
+                Оформить заказ
+              </button>
             </div>
           </>
         )}

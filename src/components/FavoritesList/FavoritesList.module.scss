@@ -1,4 +1,8 @@
 .favoritesList {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
   .customImg {
     width: 24px;
     height: 24px;
@@ -37,6 +41,14 @@
     }
   }
 
+  .contentWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -44,6 +56,7 @@
     list-style: none;
     padding: 0;
     margin: 2rem 0 0;
+    width: 100%;
   }
 
   .cardItem {
@@ -113,6 +126,11 @@
         object-fit: contain;
         display: block;
       }
+
+      &.active {
+        background: #f88989;
+        border-color: #f88989;
+      }
     }
 
     h3 {
@@ -167,6 +185,11 @@
         height: 20px;
         object-fit: contain;
         display: block;
+      }
+
+      &.active {
+        background: #43f458;
+        border-color: #43f458;
       }
     }
   }

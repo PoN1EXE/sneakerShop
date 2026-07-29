@@ -1,0 +1,243 @@
+$primary: #3b82f6;
+$primary-dark: #2563eb;
+$gray-light: #f8fafc;
+$gray-border: #e2e8f0;
+$text-dark: #0f172a;
+$text-gray: #64748b;
+$shadow:
+  0 10px 25px -5px rgba(0, 0, 0, 0.05),
+  0 8px 10px -6px rgba(0, 0, 0, 0.02);
+$radius: 20px;
+
+.profileList {
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+.contentWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  border-radius: $radius;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: $shadow;
+  border: 1px solid $gray-border;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #eef2f6;
+    padding: 0.2rem;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 1rem;
+    color: $text-dark;
+    font-weight: 500;
+
+    &:first-of-type {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0a0f1c;
+    }
+    &:not(:first-of-type) {
+      font-weight: 400;
+      color: $text-gray;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: $text-dark;
+  margin: 1.5rem 0 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid $primary;
+  display: inline-block;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.orderCard {
+  background: #ffffff;
+  border-radius: $radius;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  border: 1px solid $gray-border;
+  overflow: hidden;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+  padding: 1.25rem 1.5rem;
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    transform: translateY(-3px);
+  }
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid $gray-border;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  span {
+    font-weight: 600;
+    color: $text-dark;
+    font-size: 1rem;
+
+    &:first-child {
+      color: $text-gray;
+      font-weight: 400;
+    }
+
+    &:last-child {
+      background: $primary;
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.itemsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: $gray-light;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #f1f5f9;
+  }
+
+  .itemImage {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 0.3rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    flex-shrink: 0;
+  }
+
+  .itemInfo {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.8rem;
+
+    .itemTitle {
+      font-weight: 500;
+      color: $text-dark;
+      font-size: 0.95rem;
+      flex: 1 1 100%;
+    }
+
+    .itemPrice {
+      font-weight: 700;
+      color: $text-dark;
+      font-size: 1rem;
+    }
+
+    .itemQuantity {
+      color: $text-gray;
+      font-size: 0.85rem;
+      margin-left: auto;
+      background: #eef2f6;
+      padding: 0.1rem 0.6rem;
+      border-radius: 20px;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .profileList {
+    padding: 0 1rem;
+  }
+  .userInfo {
+    padding: 1.5rem 1rem;
+    .avatar {
+      width: 72px;
+      height: 72px;
+    }
+  }
+  .orderHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    span:last-child {
+      align-self: flex-start;
+    }
+  }
+  .cartItem {
+    flex-wrap: wrap;
+    .itemInfo {
+      .itemTitle {
+        flex: 1 1 100%;
+      }
+      .itemQuantity {
+        margin-left: 0;
+      }
+    }
+  }
+}
