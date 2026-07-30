@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { CartItem } from './cartStore'
 
 export interface OrdersStore {
@@ -7,16 +8,23 @@ export interface OrdersStore {
 }
 export interface Order {
   id: string | number
-  items: CartItem[]
+  sneakers: CartItem[]
   total: number
-  date: string
+  date: number
 }
 
-export const useOrdersStore = create<OrdersStore>((set) => ({
-  orders: [],
+export const useOrdersStore = create<OrdersStore>()(
+  persist(
+    (set) => ({
+      orders: [],
 
-  addOrder: (newOrder) =>
-    set((state) => ({
-      orders: [...state.orders, newOrder],
-    })),
-}))
+      addOrder: (newOrder) =>
+        set((state) => ({
+          orders: [...state.orders, newOrder],
+        })),
+    }),
+    {
+      name: 'ordersStorage',
+    }
+  )
+)

@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { useDebounce } from '../../hooks/useDebounce'
 import { useSneakers } from './../../hooks/useSneakers'
 import { useCartStore } from '../../store/cartStore'
 import { useFavoritesStore } from '../../store/favoritesStore'
+import { useDebounce } from '../../hooks/useDebounce'
+
 import shopCartIcon from '/src/assets/headerIcon/shopCart.png'
 import heartIcon from '/src/assets/headerIcon/heartIcon.png'
 import filledHeart from '/src/assets/headerIcon/filledHeartIcon.svg'
@@ -13,17 +14,19 @@ import styles from './FavoritesList.module.scss'
 export const FavoritesList = () => {
   const [search, setSearch] = useState('')
   const { data, isLoading, isError, error } = useSneakers()
-  const { favorites } = useFavoritesStore()
-  const items = useCartStore((state) => state.items)
-  const debouncedSearch = useDebounce(search, 500)
-  const toggleFavorites = useFavoritesStore((state) => state.toggleFavorites)
   const addToCart = useCartStore((state) => state.addToCart)
+  const sneakers = useCartStore((state) => state.sneakers)
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite)
+  const favorites = useFavoritesStore((state) => state.favorites)
+  const debouncedSearch = useDebounce(search, 500)
 
   if (isLoading) return <div>Загрузка...</div>
   if (isError) return <div>Ошибка... {error.message}</div>
 
-  const favoriteItems = data?.filter((sneaker) => favorites.includes(sneaker.id))
-  const filteredData = favoriteItems?.filter((sneaker) => sneaker.title.toLowerCase().includes(debouncedSearch))
+  const favoriteSneakers = data?.filter((sneaker) => favorites.includes(sneaker.id))
+  const filteredData = favoriteSneakers?.filter((sneaker) =>
+    sneaker.title.toLowerCase().includes(debouncedSearch.toLowerCase())
+  )
 
   return (
     <div className={styles.favoritesList}>
@@ -33,7 +36,7 @@ export const FavoritesList = () => {
           type='text'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className={styles.inp}
+          className={styles.searchInput}
           placeholder='   Поиск...'
         />
       </div>
@@ -46,16 +49,16 @@ export const FavoritesList = () => {
         ) : (
           <ul className={styles.grid}>
             {filteredData?.map((sneaker) => {
-              const isFavorites = favorites.includes(sneaker.id)
-              const isOnCart = items.some((item) => item.id === sneaker.id)
+              const isFavorite = favorites.includes(sneaker.id)
+              const isOnCart = sneakers.some((sneaker) => sneaker.id === sneaker.id)
               return (
-                <li className={styles.cardItem} key={sneaker.id}>
+                <li className={styles.cardSneaker} key={sneaker.id}>
                   <div className={styles.imageWrapper}>
-                    <img className={styles.Pic} src={sneaker.imageUrl} alt={sneaker.title} />
+                    <img className={styles.productImage} src={sneaker.imageUrl} alt={sneaker.title} />
                     <button
-                      onClick={() => toggleFavorites(sneaker.id)}
-                      className={`${styles.buttonFav} ${isFavorites ? styles.active : ''}`}>
-                      <img className={styles.customImg} src={isFavorites ? filledHeart : heartIcon} alt='В избранное' />
+                      onClick={() => toggleFavorite(sneaker.id)}
+                      className={`${styles.buttonFav} ${isFavorite ? styles.active : ''}`}>
+                      <img className={styles.customImg} src={isFavorite ? filledHeart : heartIcon} alt='В избранное' />
                     </button>
                   </div>
 

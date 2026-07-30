@@ -1,9 +1,9 @@
-import { ProfileList } from '../components/ProfileList/ProfileList'
+import { ProfileContent } from '../components/ProfileList/ProfileContent'
 
 export const Profile = () => {
   return (
     <div>
-      <ProfileList />
+      <ProfileContent />
     </div>
   )
 }

@@ -6,27 +6,27 @@ import { useOrdersStore } from '../../store/ordersStore'
 import styles from './CartModal.module.scss'
 
 export const CartModal = () => {
-  const { isCartOpen, closeCart, items, removeFromCart, incrementQuantity, decrementQuantity, clearCart } =
+  const { isCartOpen, closeCart, sneakers, removeFromCart, incrementQuantity, decrementQuantity, clearCart } =
     useCartStore(
       useShallow((state) => ({
         clearCart: state.clearCart,
         isCartOpen: state.isCartOpen,
         closeCart: state.closeCart,
-        items: state.items,
+        sneakers: state.sneakers,
         removeFromCart: state.removeFromCart,
         incrementQuantity: state.incrementQuantity,
         decrementQuantity: state.decrementQuantity,
       }))
     )
 
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const totalPrice = sneakers.reduce((sum, sneaker) => sum + sneaker.price * sneaker.quantity, 0)
   const nalog = totalPrice * 0.05
   const priceWithNalog = totalPrice + nalog
 
   const addOrder = useOrdersStore((state) => state.addOrder)
 
   const handleCheckout = () => {
-    const order = { id: Date.now(), items: items, total: priceWithNalog, date: new Date().toLocaleDateString() }
+    const order = { id: Date.now(), sneakers, total: priceWithNalog, date: Date.now() }
     addOrder(order)
     clearCart()
     closeCart()
@@ -58,28 +58,28 @@ export const CartModal = () => {
 
         <h2 className={styles.title}>Корзина</h2>
 
-        {items.length === 0 ? (
+        {sneakers.length === 0 ? (
           <p className={styles.empty}>Корзина пуста</p>
         ) : (
           <>
             <div className={styles.itemsList}>
-              {items.map((item) => (
-                <div key={item.id} className={styles.cartItem}>
-                  <img className={styles.itemImage} src={item.imageUrl} alt={item.title} />
+              {sneakers.map((sneaker) => (
+                <div key={sneaker.id} className={styles.cartItem}>
+                  <img className={styles.itemImage} src={sneaker.imageUrl} alt={sneaker.title} />
                   <div className={styles.itemInfo}>
-                    <span className={styles.itemTitle}>{item.title}</span>
-                    <span className={styles.itemPrice}>{item.price} руб.</span>
+                    <span className={styles.itemTitle}>{sneaker.title}</span>
+                    <span className={styles.itemPrice}>{sneaker.price} руб.</span>
                   </div>
 
                   <QuantityControl
-                    item={item}
+                    sneaker={sneaker}
                     incrementQuantity={incrementQuantity}
                     decrementQuantity={decrementQuantity}
                   />
 
                   <button
                     className={styles.removeBtn}
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => removeFromCart(sneaker.id)}
                     aria-label='Удалить товар'>
                     ✕
                   </button>
@@ -90,7 +90,7 @@ export const CartModal = () => {
             <div className={styles.footer}>
               <span className={styles.total}>Налог 5%: {nalog} </span>
               <span className={styles.total}>Итого: {priceWithNalog} руб.</span>
-              <button onClick={() => handleCheckout()} className={styles.checkoutBtn}>
+              <button onClick={handleCheckout} className={styles.checkoutBtn}>
                 Оформить заказ
               </button>
             </div>

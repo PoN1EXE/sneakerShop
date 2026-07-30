@@ -1,10 +1,13 @@
 import { useOrdersStore } from '../../store/ordersStore'
 import userIcon from '/src/assets/profileIcon/userProfile.svg'
-import styles from './ProfileList.module.scss'
+import styles from './ProfileContent.module.scss'
 
-export const ProfileList = () => {
+export const ProfileContent = () => {
   const orders = useOrdersStore((state) => state.orders)
-
+  console.log(
+    'Заказы:',
+    orders.map((o) => ({ date: o.date, type: typeof o.date }))
+  )
   return (
     <div className={styles.profileList}>
       <div className={styles.userInfo}>
@@ -26,18 +29,19 @@ export const ProfileList = () => {
             {orders.map((order) => (
               <li key={order.id} className={styles.orderCard}>
                 <div className={styles.orderHeader}>
-                  <span>Дата: {order.date}</span>
+                  <span>Дата: {new Date(order.date).toLocaleDateString()}</span>
+
                   <span>Сумма: {order.total} руб.</span>
                 </div>
 
                 <ul className={styles.itemsList}>
-                  {order.items.map((item) => (
-                    <li key={item.id} className={styles.cartItem}>
-                      <img className={styles.itemImage} src={item.imageUrl} alt={item.title} />
+                  {order.sneakers.map((sneaker) => (
+                    <li key={sneaker.id} className={styles.cartItem}>
+                      <img className={styles.itemImage} src={sneaker.imageUrl} alt={sneaker.title} />
                       <div className={styles.itemInfo}>
-                        <span className={styles.itemTitle}>{item.title}</span>
-                        <span className={styles.itemPrice}>{item.price} руб.</span>
-                        <span className={styles.itemQuantity}>Количество: {item.quantity}</span>
+                        <span className={styles.itemTitle}>{sneaker.title}</span>
+                        <span className={styles.itemPrice}>{sneaker.price} руб.</span>
+                        <span className={styles.itemQuantity}>Количество: {sneaker.quantity}</span>
                       </div>
                     </li>
                   ))}
