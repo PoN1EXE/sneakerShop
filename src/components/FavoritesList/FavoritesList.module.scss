@@ -20,7 +20,7 @@
       font-size: 2.5rem;
     }
 
-    .inp {
+    .searchInput {
       background-image: url('/src/assets/sneakerIcon/loopIcon.png');
       background-repeat: no-repeat;
       background-position: 0.75rem center;
@@ -59,7 +59,7 @@
     width: 100%;
   }
 
-  .cardItem {
+  .cardSneaker {
     margin: 1rem;
     background: #ffffff;
     border-radius: 30px;
@@ -84,7 +84,7 @@
       width: 100%;
     }
 
-    .Pic {
+    .productImage {
       width: 100%;
       height: 180px;
       object-fit: contain;

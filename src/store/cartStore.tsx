@@ -5,10 +5,10 @@ export interface CartStore {
   isCartOpen: boolean
   openCart: () => void
   closeCart: () => void
-  addToCart: (item: Sneaker) => void
+  addToCart: (sneaker: Sneaker) => void
   removeFromCart: (id: string) => void
   clearCart: () => void
-  items: CartItem[]
+  sneakers: CartItem[]
   incrementQuantity: (id: string) => void
   decrementQuantity: (id: string) => void
 }
@@ -19,47 +19,51 @@ export interface CartItem extends Sneaker {
 
 export const useCartStore = create<CartStore>((set) => ({
   isCartOpen: false,
-  items: [],
+  sneakers: [],
 
   openCart: () => set({ isCartOpen: true }),
   closeCart: () => set({ isCartOpen: false }),
 
-  addToCart: (item) =>
+  addToCart: (sneaker) =>
     set((state) => {
-      const existingItem = state.items.find((i) => i.id === item.id)
+      const existingItem = state.sneakers.find((i) => i.id === sneaker.id)
       if (existingItem) {
         return {
-          items: state.items.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i)),
+          sneakers: state.sneakers.map((i) => (i.id === sneaker.id ? { ...i, quantity: i.quantity + 1 } : i)),
         }
       }
       return {
-        items: [...state.items, { ...item, quantity: 1 }],
+        sneakers: [...state.sneakers, { ...sneaker, quantity: 1 }],
       }
     }),
 
   removeFromCart: (id) =>
     set((state) => ({
-      items: state.items.filter((item) => item.id !== id),
+      sneakers: state.sneakers.filter((sneaker) => sneaker.id !== id),
     })),
 
   incrementQuantity: (id) =>
     set((state) => ({
-      items: state.items.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item)),
+      sneakers: state.sneakers.map((sneaker) =>
+        sneaker.id === id ? { ...sneaker, quantity: sneaker.quantity + 1 } : sneaker
+      ),
     })),
 
   decrementQuantity: (id) =>
     set((state) => {
-      const existingItem = state.items.find((item) => item.id === id)
+      const existingItem = state.sneakers.find((sneaker) => sneaker.id === id)
       if (!existingItem) return state
       if (existingItem.quantity === 1) {
         return {
-          items: state.items.filter((item) => item.id !== id),
+          sneakers: state.sneakers.filter((sneaker) => sneaker.id !== id),
         }
       }
       return {
-        items: state.items.map((item) => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item)),
+        sneakers: state.sneakers.map((sneaker) =>
+          sneaker.id === id ? { ...sneaker, quantity: sneaker.quantity - 1 } : sneaker
+        ),
       }
     }),
 
-  clearCart: () => set({ items: [] }),
+  clearCart: () => set({ sneakers: [] }),
 }))

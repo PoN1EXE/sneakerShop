@@ -1,17 +1,27 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export interface FavoritesStore {
   favorites: string[]
-  toggleFavorites: (id: string) => void
+  toggleFavorite: (id: string) => void
 }
 
-export const useFavoritesStore = create<FavoritesStore>((set) => ({
-  favorites: [],
+export const useFavoritesStore = create<FavoritesStore>()(
+  persist(
+    (set) => ({
+      favorites: [],
 
-  toggleFavorites: (id) => {
-    set((state) => {
-      const isFavorites = state.favorites.includes(id)
-      return { favorites: isFavorites ? state.favorites.filter((favId) => favId !== id) : [...state.favorites, id] }
-    })
-  },
-}))
+      toggleFavorite: (id) => {
+        set((state) => {
+          const isFavorite = state.favorites.includes(id)
+          return {
+            favorites: isFavorite ? state.favorites.filter((favId) => favId !== id) : [...state.favorites, id],
+          }
+        })
+      },
+    }),
+    {
+      name: 'favoritesStorage',
+    }
+  )
+)
