@@ -4,18 +4,14 @@ import { useCartStore } from '../../store/cartStore'
 import { useFavoritesStore } from '../../store/favoritesStore'
 import { useDebounce } from '../../hooks/useDebounce'
 
-import shopCartIcon from '/src/assets/headerIcon/shopCart.png'
-import heartIcon from '/src/assets/headerIcon/heartIcon.png'
-import filledHeart from '/src/assets/headerIcon/filledHeartIcon.svg'
-import addIcon from '/src/assets/sneakerIcon/addIcon.svg'
-
 import styles from './FavoritesList.module.scss'
+import { SneakerCard } from '../SneakerCard/SneakerCard'
 
 export const FavoritesList = () => {
   const [search, setSearch] = useState('')
   const { data, isLoading, isError, error } = useSneakers()
+  const cartItems = useCartStore((state) => state.sneakers)
   const addToCart = useCartStore((state) => state.addToCart)
-  const sneakers = useCartStore((state) => state.sneakers)
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite)
   const favorites = useFavoritesStore((state) => state.favorites)
   const debouncedSearch = useDebounce(search, 500)
@@ -48,37 +44,16 @@ export const FavoritesList = () => {
           </div>
         ) : (
           <ul className={styles.grid}>
-            {filteredData?.map((sneaker) => {
-              const isFavorite = favorites.includes(sneaker.id)
-              const isOnCart = sneakers.some((sneaker) => sneaker.id === sneaker.id)
-              return (
-                <li className={styles.cardSneaker} key={sneaker.id}>
-                  <div className={styles.imageWrapper}>
-                    <img className={styles.productImage} src={sneaker.imageUrl} alt={sneaker.title} />
-                    <button
-                      onClick={() => toggleFavorite(sneaker.id)}
-                      className={`${styles.buttonFav} ${isFavorite ? styles.active : ''}`}>
-                      <img className={styles.customImg} src={isFavorite ? filledHeart : heartIcon} alt='В избранное' />
-                    </button>
-                  </div>
-
-                  <h3>{sneaker.title}</h3>
-                  <div className={styles.cardFooter}>
-                    <p>Цена:</p>
-                    <span className={styles.price}>{sneaker.price}</span>
-                    <button
-                      onClick={() => addToCart(sneaker)}
-                      className={`${styles.buttonAdd} ${isOnCart ? styles.active : ''}`}>
-                      <img
-                        className={styles.customImg}
-                        src={isOnCart ? addIcon : shopCartIcon}
-                        alt='Добавить в корзину'
-                      />
-                    </button>
-                  </div>
-                </li>
-              )
-            })}
+            {filteredData?.map((sneaker) => (
+              <SneakerCard
+                key={sneaker.id}
+                sneaker={sneaker}
+                isFavorite={favorites.includes(sneaker.id)}
+                isInCart={cartItems.some((item) => item.id === sneaker.id)}
+                onToggleFavorite={toggleFavorite}
+                onAddToCart={addToCart}
+              />
+            ))}
           </ul>
         )}
       </div>

@@ -43,7 +43,7 @@ export const SneakerList = () => {
                 key={sneaker.id}
                 sneaker={sneaker}
                 isFavorite={favorites.includes(sneaker.id)}
-                isOnCart={cartItems.some((item) => item.id === sneaker.id)}
+                isInCart={cartItems.some((item) => item.id === sneaker.id)}
                 onToggleFavorite={toggleFavorite}
                 onAddToCart={addToCart}
               />

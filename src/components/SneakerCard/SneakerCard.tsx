@@ -8,12 +8,12 @@ import styles from './SneakerCard.module.scss'
 interface SneakerCardProps {
   sneaker: Sneaker
   isFavorite: boolean
-  isOnCart: boolean
+  isInCart: boolean
   onToggleFavorite: (id: string) => void
   onAddToCart: (sneaker: Sneaker) => void
 }
 
-export const SneakerCard = ({ sneaker, isFavorite, isOnCart, onToggleFavorite, onAddToCart }: SneakerCardProps) => {
+export const SneakerCard = ({ sneaker, isFavorite, isInCart, onToggleFavorite, onAddToCart }: SneakerCardProps) => {
   return (
     <li className={styles.cardSneaker}>
       <div className={styles.imageWrapper}>
@@ -21,7 +21,7 @@ export const SneakerCard = ({ sneaker, isFavorite, isOnCart, onToggleFavorite, o
         <button
           onClick={() => onToggleFavorite(sneaker.id)}
           className={`${styles.buttonFav} ${isFavorite ? styles.active : ''}`}>
-          <img className={styles.customImg} src={isFavorite ? filledHeart : heartIcon} alt='В избранное' />
+          <img className={styles.actionIcon} src={isFavorite ? filledHeart : heartIcon} alt='В избранное' />
         </button>
       </div>
 
@@ -29,8 +29,8 @@ export const SneakerCard = ({ sneaker, isFavorite, isOnCart, onToggleFavorite, o
 
       <div className={styles.cardFooter}>
         <span className={styles.price}>{sneaker.price} руб.</span>
-        <button onClick={() => onAddToCart(sneaker)} className={`${styles.buttonAdd} ${isOnCart ? styles.active : ''}`}>
-          <img className={styles.customImg} src={isOnCart ? addIcon : shopCartIcon} alt='Добавить в корзину' />
+        <button onClick={() => onAddToCart(sneaker)} className={`${styles.buttonAdd} ${isInCart ? styles.active : ''}`}>
+          <img className={styles.actionIcon} src={isInCart ? addIcon : shopCartIcon} alt='Добавить в корзину' />
         </button>
       </div>
     </li>

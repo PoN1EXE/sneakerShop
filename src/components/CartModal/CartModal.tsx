@@ -3,6 +3,7 @@ import { useCartStore } from '../../store/cartStore'
 import { useShallow } from 'zustand/shallow'
 import { QuantityControl } from '../QuantityControl/QuantityControl'
 import { useOrdersStore } from '../../store/ordersStore'
+import trashСan from '/src/assets/modalIcon/trashCan.png'
 import styles from './CartModal.module.scss'
 
 export const CartModal = () => {
@@ -19,14 +20,17 @@ export const CartModal = () => {
       }))
     )
 
+  const totalSneakers = sneakers.reduce((sum, s) => sum + s.quantity, 0)
+  const displayCount = totalSneakers > 99 ? '99+' : totalSneakers
+
   const totalPrice = sneakers.reduce((sum, sneaker) => sum + sneaker.price * sneaker.quantity, 0)
-  const nalog = totalPrice * 0.05
-  const priceWithNalog = totalPrice + nalog
+  const tax = totalPrice * 0.05
+  const total = totalPrice + tax
 
   const addOrder = useOrdersStore((state) => state.addOrder)
 
   const handleCheckout = () => {
-    const order = { id: Date.now(), sneakers, total: priceWithNalog, date: Date.now() }
+    const order = { id: Date.now(), sneakers, total: total, date: Date.now() }
     addOrder(order)
     clearCart()
     closeCart()
@@ -52,12 +56,17 @@ export const CartModal = () => {
   return (
     <div className={styles.overlay} onClick={closeCart}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={closeCart}>
-          ✕
-        </button>
-
-        <h2 className={styles.title}>Корзина</h2>
-
+        <div className={styles.modalHeader}>
+          <h2 className={styles.title}>
+            {totalSneakers === 0 ? 'Корзина пуста' : `Товаров в корзине: ${displayCount}`}
+          </h2>
+          <button className={styles.trashCanButton} onClick={clearCart}>
+            <img className={styles.trashIcon} src={trashСan} alt='Очистить корзину' />
+          </button>
+          <button className={styles.closeButton} onClick={closeCart}>
+            ✕
+          </button>
+        </div>
         {sneakers.length === 0 ? (
           <p className={styles.empty}>Корзина пуста</p>
         ) : (
@@ -88,8 +97,8 @@ export const CartModal = () => {
             </div>
 
             <div className={styles.footer}>
-              <span className={styles.total}>Налог 5%: {nalog} </span>
-              <span className={styles.total}>Итого: {priceWithNalog} руб.</span>
+              <span className={styles.total}>Налог 5%: {tax} </span>
+              <span className={styles.total}>Итого: {total} руб.</span>
               <button onClick={handleCheckout} className={styles.checkoutBtn}>
                 Оформить заказ
               </button>
