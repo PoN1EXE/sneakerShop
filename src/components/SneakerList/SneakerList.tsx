@@ -9,6 +9,8 @@ import styles from './SneakerList.module.scss'
 export const SneakerList = () => {
   const [search, setSearch] = useState('')
   const [sortOptions, setSortOptions] = useState<'price-low' | 'price-high' | 'name-asc' | 'name-desc'>('price-low')
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
   const debouncedSearch = useDebounce(search, 500)
   const { data, isLoading, isError, error } = useSneakers()
   const cartItems = useCartStore((state) => state.sneakers)
@@ -21,7 +23,14 @@ export const SneakerList = () => {
 
   const filteredData = data?.filter((sneaker) => sneaker.title.toLowerCase().includes(debouncedSearch.toLowerCase()))
 
-  const sortedData = [...(filteredData || [])].sort((a, b) => {
+  const priceFilteredData = filteredData?.filter((sneaker) => {
+    const price = sneaker.price
+    if (minPrice !== '' && price < Number(minPrice)) return false
+    if (maxPrice !== '' && price > Number(maxPrice)) return false
+    return true
+  })
+
+  const sortedData = [...(priceFilteredData || [])].sort((a, b) => {
     switch (sortOptions) {
       case 'price-low':
         return a.price - b.price
@@ -39,6 +48,36 @@ export const SneakerList = () => {
     }
   })
 
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (value === '') {
+      setMinPrice('')
+      return
+    }
+
+    const num = Number(value)
+    if (num < 0) {
+      setMinPrice('0')
+    } else {
+      setMinPrice(value)
+    }
+  }
+
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (value === '') {
+      setMaxPrice('')
+      return
+    }
+
+    const num = Number(value)
+    if (num < 0) {
+      setMaxPrice('0')
+    } else {
+      setMaxPrice(value)
+    }
+  }
+
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOptions(e.target.value as typeof sortOptions)
   }
@@ -54,6 +93,21 @@ export const SneakerList = () => {
             <option value='price-high'>Сначала дорогие</option>
             <option value='price-low'>Сначала дешёвые</option>
           </select>
+
+          <input
+            type='number'
+            className={styles.priceInput}
+            placeholder='Цена от'
+            value={minPrice}
+            onChange={handleMinPriceChange}
+          />
+          <input
+            type='number'
+            className={styles.priceInput}
+            placeholder='Цена до'
+            value={maxPrice}
+            onChange={handleMaxPriceChange}
+          />
           <input
             type='text'
             value={search}

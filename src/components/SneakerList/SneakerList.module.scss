@@ -77,3 +77,41 @@
     }
   }
 }
+.sortSelect,
+.priceInput,
+.searchInput {
+  height: 3rem;
+  border: 1px solid #e9edf2;
+  border-radius: 16px;
+  background: #ffffff;
+  font-size: 0.95rem;
+  color: #1e293b;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+  }
+}
+
+.priceInput {
+  width: 90px;
+  padding: 0 0.75rem;
+  text-align: center;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+}
