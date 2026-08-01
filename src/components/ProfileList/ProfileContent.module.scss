@@ -81,14 +81,54 @@ $radius: 20px;
   }
 }
 
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 0 1.2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .title {
   font-size: 1.8rem;
   font-weight: 700;
   color: $text-dark;
-  margin: 1.5rem 0 1.2rem;
   padding-bottom: 0.5rem;
   border-bottom: 3px solid $primary;
   display: inline-block;
+  margin: 0;
+}
+
+.sortButton {
+  background: transparent;
+  border: 1px solid $gray-border;
+  border-radius: 30px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: $text-gray;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  &:hover {
+    background: $gray-light;
+    border-color: #94a3b8;
+    color: $text-dark;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  .arrow {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
 }
 
 .grid {

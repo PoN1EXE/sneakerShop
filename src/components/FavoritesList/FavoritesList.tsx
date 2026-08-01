@@ -3,11 +3,13 @@ import { useSneakers } from './../../hooks/useSneakers'
 import { useCartStore } from '../../store/cartStore'
 import { useFavoritesStore } from '../../store/favoritesStore'
 import { useDebounce } from '../../hooks/useDebounce'
+import { SneakerCard } from '../SneakerCard/SneakerCard'
+import { useNavigate } from 'react-router-dom'
 
 import styles from './FavoritesList.module.scss'
-import { SneakerCard } from '../SneakerCard/SneakerCard'
 
 export const FavoritesList = () => {
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const { data, isLoading, isError, error } = useSneakers()
   const cartItems = useCartStore((state) => state.sneakers)
@@ -18,6 +20,10 @@ export const FavoritesList = () => {
 
   if (isLoading) return <div>Загрузка...</div>
   if (isError) return <div>Ошибка... {error.message}</div>
+
+  const navigateToSneakerList = () => {
+    navigate('/')
+  }
 
   const favoriteSneakers = data?.filter((sneaker) => favorites.includes(sneaker.id))
   const filteredData = favoriteSneakers?.filter((sneaker) =>
@@ -38,9 +44,19 @@ export const FavoritesList = () => {
       </div>
 
       <div>
-        {filteredData?.length === 0 ? (
+        {favoriteSneakers?.length === 0 ? (
           <div className={styles.contentWrapper}>
             <h2 className={styles.content}>Упс, ты еще не добавил кроссовки...</h2>
+            <button className={styles.shoesListButton} onClick={navigateToSneakerList}>
+              Вернуться к списку кроссовок!
+            </button>
+          </div>
+        ) : filteredData?.length === 0 ? (
+          <div className={styles.contentWrapper}>
+            <h2>По запросу {search} ничего не найдено</h2>
+            <button className={styles.shoesListButton} onClick={() => setSearch('')}>
+              Очистить поиск
+            </button>
           </div>
         ) : (
           <ul className={styles.grid}>

@@ -1,13 +1,17 @@
 import { useOrdersStore } from '../../store/ordersStore'
+import { useState } from 'react'
 import userIcon from '/src/assets/profileIcon/userProfile.svg'
 import styles from './ProfileContent.module.scss'
 
 export const ProfileContent = () => {
   const orders = useOrdersStore((state) => state.orders)
-  console.log(
-    'Заказы:',
-    orders.map((o) => ({ date: o.date, type: typeof o.date }))
-  )
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
+
+  const sortedOrders = [...orders].sort((a, b) => {
+    if (sortOrder === 'newest') return b.date - a.date
+    return a.date - b.date
+  })
+
   return (
     <div className={styles.profileList}>
       <div className={styles.userInfo}>
@@ -18,19 +22,26 @@ export const ProfileContent = () => {
       </div>
 
       <div>
-        <h2 className={styles.title}>Все кроссовки</h2>
+        <div className={styles.headerRow}>
+          <h2 className={styles.title}>Все кроссовки</h2>
+          <button
+            className={styles.sortButton}
+            onClick={() => setSortOrder(sortOrder === 'newest' ? 'oldest' : 'newest')}>
+            <span className={styles.arrow}>{sortOrder === 'newest' ? '↓' : '↑'}</span>
+            {sortOrder === 'newest' ? 'Сначала новые' : 'Сначала старые'}
+          </button>
+        </div>
 
-        {orders.length === 0 ? (
+        {sortedOrders.length === 0 ? (
           <div className={styles.contentWrapper}>
             <h2>Упс, ты еще не покупал кроссовки...</h2>
           </div>
         ) : (
           <ul className={styles.grid}>
-            {orders.map((order) => (
+            {sortedOrders.map((order) => (
               <li key={order.id} className={styles.orderCard}>
                 <div className={styles.orderHeader}>
                   <span>Дата: {new Date(order.date).toLocaleDateString()}</span>
-
                   <span>Сумма: {order.total} руб.</span>
                 </div>
 

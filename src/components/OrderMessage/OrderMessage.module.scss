@@ -1,0 +1,112 @@
+.orderMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+
+  .title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0 0 1.5rem;
+  }
+
+  .orderNumber {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #3b82f6;
+    background: #eff6ff;
+    padding: 0.4rem 1.6rem;
+    border-radius: 40px;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5px;
+    border: 1px solid #bfdbfe;
+    display: inline-block;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .buttonPrimary {
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.15s;
+
+    &:hover {
+      background: #2563eb;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+
+  .buttonSecondary {
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    padding: 0.7rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+
+    &:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: 1.4rem;
+    }
+    .orderNumber {
+      font-size: 1.2rem;
+      padding: 0.3rem 1.2rem;
+    }
+    .buttons {
+      max-width: 100%;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

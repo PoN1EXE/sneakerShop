@@ -64,3 +64,25 @@ img {
   background: #f88989;
   border-color: #f88989;
 }
+
+.shoesListButton {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.8rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+
+  &:hover {
+    background: #2563eb;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
