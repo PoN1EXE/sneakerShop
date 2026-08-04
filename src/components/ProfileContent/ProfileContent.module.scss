@@ -9,7 +9,7 @@ $shadow:
   0 8px 10px -6px rgba(0, 0, 0, 0.02);
 $radius: 20px;
 
-.profileList {
+.profileContent {
   min-height: 100vh;
   max-width: 1200px;
   margin: 2rem auto;
@@ -279,5 +279,27 @@ $radius: 20px;
         margin-left: 0;
       }
     }
+  }
+}
+.orderButton {
+  background: $primary;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: $primary-dark;
+  }
+
+  &:active {
+    transform: scale(0.96);
   }
 }

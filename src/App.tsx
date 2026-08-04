@@ -4,6 +4,7 @@ import { MainPage } from './pages/MainPage'
 import { Favorites } from './pages/Favorites'
 import { NotFound } from './pages/NotFound'
 import { Profile } from './pages/Profile'
+import { OrderDetails } from './pages/OrderDetails'
 import { CartModal } from './components/CartModal/CartModal'
 
 import styles from './App.module.scss'
@@ -18,6 +19,7 @@ function App() {
           <Route path='*' element={<NotFound />} />
           <Route path='/Favorites' element={<Favorites />} />
           <Route path='/Profile' element={<Profile />} />
+          <Route path='/Profile/:orderId' element={<OrderDetails />} />
         </Routes>
         <CartModal />
       </div>

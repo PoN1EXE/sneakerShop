@@ -27,11 +27,11 @@ export const Header = () => {
           <img src={shopCart} alt='Корзина' />
           <span>Корзина</span>
         </button>
-        <Link to='/favorites' className={styles.iconLink}>
+        <Link to='/Favorites' className={styles.iconLink}>
           <img src={heartIcon} alt='Закладки' />
           <span>Закладки</span>
         </Link>
-        <Link to='/profile' className={styles.iconLink}>
+        <Link to='/Profile' className={styles.iconLink}>
           <img src={humanIcon} alt='Профиль' />
           <span>Профиль</span>
         </Link>

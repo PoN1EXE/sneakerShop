@@ -1,9 +1,11 @@
 import { useOrdersStore } from '../../store/ordersStore'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import userIcon from '/src/assets/profileIcon/userProfile.svg'
 import styles from './ProfileContent.module.scss'
 
 export const ProfileContent = () => {
+  const navigate = useNavigate()
   const orders = useOrdersStore((state) => state.orders)
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
 
@@ -12,8 +14,12 @@ export const ProfileContent = () => {
     return a.date - b.date
   })
 
+  const handleOrderDetails = (id: string) => {
+    navigate(`/Profile/${id}`)
+  }
+
   return (
-    <div className={styles.profileList}>
+    <div className={styles.profileContent}>
       <div className={styles.userInfo}>
         <img src={userIcon} alt='Аватар' className={styles.avatar} />
         <p>Фамилия Имя</p>
@@ -43,6 +49,9 @@ export const ProfileContent = () => {
                 <div className={styles.orderHeader}>
                   <span>Дата: {new Date(order.date).toLocaleDateString()}</span>
                   <span>Сумма: {order.total} руб.</span>
+                  <button className={styles.orderButton} onClick={() => handleOrderDetails(String(order.id))}>
+                    Перейти к заказу
+                  </button>
                 </div>
 
                 <ul className={styles.itemsList}>
