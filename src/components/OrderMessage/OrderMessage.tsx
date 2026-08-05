@@ -13,10 +13,10 @@ export const OrderMessage = ({ orderId, onClose, onNavigateToOrders }: OrderMess
       <p className={styles.subtitle}>Номер вашего заказа:</p>
       <span className={styles.orderNumber}>#{orderId}</span>
       <div className={styles.buttons}>
-        <button className={styles.buttonPrimary} onClick={onNavigateToOrders}>
+        <button aria-label='Перейти к заказам' className={styles.buttonPrimary} onClick={onNavigateToOrders}>
           Перейти к заказам
         </button>
-        <button className={styles.buttonSecondary} onClick={onClose}>
+        <button aria-label='Продолжить покупки' className={styles.buttonSecondary} onClick={onClose}>
           Продолжить покупки
         </button>
       </div>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '../../store/userStore'
 import { useShallow } from 'zustand/shallow'
 import { ProfileModal } from '../ProfileModal/ProfileModal'
+import { formatPrice } from './../../utils/formatPrice'
 import userIcon from '/src/assets/profileIcon/userProfile.svg'
 import styles from './ProfileContent.module.scss'
 
@@ -35,7 +36,7 @@ export const ProfileContent = () => {
         <p>{user.name}</p>
         <p>{user.phone}</p>
         <p>{user.email}</p>
-        <button className={styles.orderButton} onClick={openProfileEdit}>
+        <button aria-label='Редактировать профиль' className={styles.orderButton} onClick={openProfileEdit}>
           Редактировать профиль
         </button>
       </div>
@@ -44,6 +45,7 @@ export const ProfileContent = () => {
         <div className={styles.headerRow}>
           <h2 className={styles.title}>Все кроссовки</h2>
           <button
+            aria-label='Сортировка'
             className={styles.sortButton}
             onClick={() => setSortOrder(sortOrder === 'newest' ? 'oldest' : 'newest')}>
             <span className={styles.arrow}>{sortOrder === 'newest' ? '↓' : '↑'}</span>
@@ -61,8 +63,11 @@ export const ProfileContent = () => {
               <li key={order.id} className={styles.orderCard}>
                 <div className={styles.orderHeader}>
                   <span>Дата: {new Date(order.date).toLocaleDateString()}</span>
-                  <span>Сумма: {order.total} руб.</span>
-                  <button className={styles.orderButton} onClick={() => handleOrderDetails(String(order.id))}>
+                  <span>Сумма: {formatPrice(order.total)}</span>
+                  <button
+                    aria-label='Перейти к заказу'
+                    className={styles.orderButton}
+                    onClick={() => handleOrderDetails(String(order.id))}>
                     Перейти к заказу
                   </button>
                 </div>
@@ -73,7 +78,7 @@ export const ProfileContent = () => {
                       <img className={styles.itemImage} src={sneaker.imageUrl} alt={sneaker.title} />
                       <div className={styles.itemInfo}>
                         <span className={styles.itemTitle}>{sneaker.title}</span>
-                        <span className={styles.itemPrice}>{sneaker.price} руб.</span>
+                        <span className={styles.itemPrice}>{formatPrice(sneaker.price)}</span>
                         <span className={styles.itemQuantity}>Количество: {sneaker.quantity}</span>
                       </div>
                     </li>

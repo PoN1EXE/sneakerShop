@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useOrdersStore } from './../../store/ordersStore'
+import { formatPrice } from './../../utils/formatPrice'
 import styles from './OrderItem.module.scss'
 
 export const OrderItem = () => {
@@ -24,7 +25,7 @@ export const OrderItem = () => {
 
       <div className={styles.summary}>
         <span className={styles.totalLabel}>Итого</span>
-        <span className={styles.totalPrice}>{total} руб.</span>
+        <span className={styles.totalPrice}>{formatPrice(total)}</span>
       </div>
 
       <ul className={styles.itemsList}>
@@ -33,8 +34,8 @@ export const OrderItem = () => {
             <img className={styles.itemImage} src={sneaker.imageUrl} alt={sneaker.title} />
             <div className={styles.itemInfo}>
               <span className={styles.itemTitle}>{sneaker.title}</span>
-              <span className={styles.itemPrice}>{sneaker.price} руб.</span>
-              <span className={styles.itemTax}>Налог на одну пару 5%: {sneaker.price * 0.05} руб.</span>
+              <span className={styles.itemPrice}>{formatPrice(sneaker.price)}</span>
+              <span className={styles.itemTax}>Налог на одну пару 5%: {formatPrice(sneaker.price * 0.05)}</span>
               <span className={styles.itemQuantity}>Количество: {sneaker.quantity}</span>
             </div>
           </li>

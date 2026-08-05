@@ -11,13 +11,17 @@ export const QuantityControl = ({ sneaker, incrementQuantity, decrementQuantity 
   return (
     <div className={styles.control}>
       <button
+        aria-label='Уменьшить количество пар на 1'
         className={styles.controlButton}
         onClick={() => decrementQuantity(sneaker.id)}
         disabled={sneaker.quantity === 1}>
         -
       </button>
       <span className={styles.quantity}>{sneaker.quantity}</span>
-      <button className={styles.controlButton} onClick={() => incrementQuantity(sneaker.id)}>
+      <button
+        aria-label='Увеличить количество пар на 1'
+        className={styles.controlButton}
+        onClick={() => incrementQuantity(sneaker.id)}>
         +
       </button>
     </div>

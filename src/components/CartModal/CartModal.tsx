@@ -7,6 +7,7 @@ import { OrderMessage } from '../OrderMessage/OrderMessage'
 import { useNavigate } from 'react-router-dom'
 import trashСan from '/src/assets/modalIcon/trashCan.png'
 import styles from './CartModal.module.scss'
+import { formatPrice } from './../../utils/formatPrice'
 
 export const CartModal = () => {
   const { isCartOpen, closeCart, sneakers, removeFromCart, incrementQuantity, decrementQuantity, clearCart } =
@@ -75,7 +76,7 @@ export const CartModal = () => {
 
   return (
     <div className={styles.overlay} onClick={handleCloseModal}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div role='dialog' aria-modal='true' className={styles.modal} onClick={(e) => e.stopPropagation()}>
         {isConfirmed ? (
           <OrderMessage orderId={orderId} onClose={handleCloseModal} onNavigateToOrders={onNavigateToOrders} />
         ) : (
@@ -84,10 +85,10 @@ export const CartModal = () => {
               <h2 className={styles.title}>
                 {totalSneakers === 0 ? 'Корзина пуста' : `Товаров в корзине: ${displayCount}`}
               </h2>
-              <button className={styles.trashCanButton} onClick={clearCart}>
+              <button aria-label='Очистить корзину' className={styles.trashCanButton} onClick={clearCart}>
                 <img className={styles.trashIcon} src={trashСan} alt='Очистить корзину' />
               </button>
-              <button className={styles.closeButton} onClick={handleCloseModal}>
+              <button aria-label='Закрыть корзину' className={styles.closeButton} onClick={handleCloseModal}>
                 ✕
               </button>
             </div>
@@ -102,7 +103,7 @@ export const CartModal = () => {
                       <img className={styles.itemImage} src={sneaker.imageUrl} alt={sneaker.title} />
                       <div className={styles.itemInfo}>
                         <span className={styles.itemTitle}>{sneaker.title}</span>
-                        <span className={styles.itemPrice}>{sneaker.price} руб.</span>
+                        <span className={styles.itemPrice}>{formatPrice(sneaker.price)}</span>
                       </div>
 
                       <QuantityControl
@@ -122,9 +123,9 @@ export const CartModal = () => {
                 </div>
 
                 <div className={styles.footer}>
-                  <span className={styles.total}>Налог 5%: {tax} руб.</span>
-                  <span className={styles.total}>Итого: {total} руб.</span>
-                  <button onClick={handleCheckout} className={styles.checkoutBtn}>
+                  <span className={styles.total}>Налог 5%: {formatPrice(tax)}</span>
+                  <span className={styles.total}>Итого: {formatPrice(total)}</span>
+                  <button aria-label='Оформить заказ' onClick={handleCheckout} className={styles.checkoutBtn}>
                     Оформить заказ
                   </button>
                 </div>

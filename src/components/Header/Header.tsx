@@ -23,15 +23,15 @@ export const Header = () => {
         </Link>
       </div>
       <div className={styles.headerRight}>
-        <button onClick={openModal} className={styles.iconLink}>
+        <button aria-label='Корзина' onClick={openModal} className={styles.iconLink}>
           <img src={shopCart} alt='Корзина' />
           <span>Корзина</span>
         </button>
-        <Link to='/Favorites' className={styles.iconLink}>
+        <Link aria-label='Закладки' to='/Favorites' className={styles.iconLink}>
           <img src={heartIcon} alt='Закладки' />
           <span>Закладки</span>
         </Link>
-        <Link to='/Profile' className={styles.iconLink}>
+        <Link aria-label='Профиль' to='/Profile' className={styles.iconLink}>
           <img src={humanIcon} alt='Профиль' />
           <span>Профиль</span>
         </Link>

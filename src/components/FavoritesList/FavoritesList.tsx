@@ -47,14 +47,17 @@ export const FavoritesList = () => {
         {favoriteSneakers?.length === 0 ? (
           <div className={styles.contentWrapper}>
             <h2 className={styles.content}>Упс, ты еще не добавил кроссовки...</h2>
-            <button className={styles.shoesListButton} onClick={navigateToSneakerList}>
+            <button
+              aria-label='Вернуться к списку кроссовок'
+              className={styles.shoesListButton}
+              onClick={navigateToSneakerList}>
               Вернуться к списку кроссовок!
             </button>
           </div>
         ) : filteredData?.length === 0 ? (
           <div className={styles.contentWrapper}>
             <h2>По запросу {search} ничего не найдено</h2>
-            <button className={styles.shoesListButton} onClick={() => setSearch('')}>
+            <button aria-label='Очистить поиск' className={styles.shoesListButton} onClick={() => setSearch('')}>
               Очистить поиск
             </button>
           </div>

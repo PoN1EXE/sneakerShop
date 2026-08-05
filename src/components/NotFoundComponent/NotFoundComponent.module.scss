@@ -1,0 +1,93 @@
+// Переменные (можно вынести в отдельный файл)
+$primary: #3b82f6;
+$primary-dark: #2563eb;
+$text-dark: #0f172a;
+$text-gray: #64748b;
+$gray-border: #e2e8f0;
+$shadow:
+  0 10px 25px -5px rgba(0, 0, 0, 0.05),
+  0 8px 10px -6px rgba(0, 0, 0, 0.02);
+$radius: 20px;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: #f8fafc;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: $radius;
+  padding: 3rem 2.5rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: $shadow;
+  border: 1px solid $gray-border;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: $text-dark;
+  margin: 0 0 0.75rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: $text-gray;
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+.button {
+  background: $primary;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2.2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+
+  &:hover {
+    background: $primary-dark;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2rem 1.5rem;
+  }
+  .title {
+    font-size: 1.6rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+  }
+}

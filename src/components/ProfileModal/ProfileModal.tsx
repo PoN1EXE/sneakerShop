@@ -49,8 +49,8 @@ export const ProfileModal = () => {
   return (
     <div className={styles.overlay}>
       {/* Я специально убрал закрытие модалки при нажатии на оверлей */}
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose}>
+      <div role='dialog' aria-modal='true' className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <button aria-label='Закрыть редактирование' className={styles.closeButton} onClick={onClose}>
           х
         </button>
         <h2 className={styles.title}>Редактирование профиля</h2>
@@ -89,10 +89,10 @@ export const ProfileModal = () => {
         </div>
 
         <div className={styles.actions}>
-          <button className={styles.cancelButton} onClick={onClose}>
+          <button aria-label='Отменить' className={styles.cancelButton} onClick={onClose}>
             Отменить
           </button>
-          <button className={styles.saveButton} onClick={handleSaveData}>
+          <button aria-label='Сохранить' className={styles.saveButton} onClick={handleSaveData}>
             Сохранить
           </button>
         </div>

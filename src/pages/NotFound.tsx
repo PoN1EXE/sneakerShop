@@ -1,3 +1,9 @@
+import { NotFoundComponent } from '../components/NotFoundComponent/NotFoundComponent'
+
 export const NotFound = () => {
-  return <div>Упс...Такой страницы нет...</div>
+  return (
+    <div>
+      <NotFoundComponent />
+    </div>
+  )
 }
