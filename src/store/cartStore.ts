@@ -73,6 +73,7 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'cartStorage',
       partialize: (state) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { isCartOpen, ...rest } = state
         return rest
       },

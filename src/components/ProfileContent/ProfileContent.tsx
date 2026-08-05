@@ -1,10 +1,14 @@
 import { useOrdersStore } from '../../store/ordersStore'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useUserStore } from '../../store/userStore'
+import { useShallow } from 'zustand/shallow'
+import { ProfileModal } from '../ProfileModal/ProfileModal'
 import userIcon from '/src/assets/profileIcon/userProfile.svg'
 import styles from './ProfileContent.module.scss'
 
 export const ProfileContent = () => {
+  const user = useUserStore((state) => state.user)
   const navigate = useNavigate()
   const orders = useOrdersStore((state) => state.orders)
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
@@ -18,13 +22,22 @@ export const ProfileContent = () => {
     navigate(`/Profile/${id}`)
   }
 
+  const { openProfileEdit } = useUserStore(
+    useShallow((state) => ({
+      openProfileEdit: state.openProfileEdit,
+    }))
+  )
+
   return (
     <div className={styles.profileContent}>
       <div className={styles.userInfo}>
         <img src={userIcon} alt='Аватар' className={styles.avatar} />
-        <p>Фамилия Имя</p>
-        <p>номер телефона</p>
-        <p>Почта</p>
+        <p>{user.name}</p>
+        <p>{user.phone}</p>
+        <p>{user.email}</p>
+        <button className={styles.orderButton} onClick={openProfileEdit}>
+          Редактировать профиль
+        </button>
       </div>
 
       <div>
@@ -71,6 +84,7 @@ export const ProfileContent = () => {
           </ul>
         )}
       </div>
+      <ProfileModal />
     </div>
   )
 }
