@@ -1,13 +1,13 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useCartStore } from '../../store/cartStore'
 import { useShallow } from 'zustand/shallow'
 import { QuantityControl } from '../QuantityControl/QuantityControl'
 import { useOrdersStore } from '../../store/ordersStore'
 import { OrderMessage } from '../OrderMessage/OrderMessage'
 import { useNavigate } from 'react-router-dom'
+import { formatPrice } from './../../utils/formatPrice'
 import trashСan from '/src/assets/modalIcon/trashCan.png'
 import styles from './CartModal.module.scss'
-import { formatPrice } from './../../utils/formatPrice'
 
 export const CartModal = () => {
   const { isCartOpen, closeCart, sneakers, removeFromCart, incrementQuantity, decrementQuantity, clearCart } =
@@ -35,6 +35,41 @@ export const CartModal = () => {
 
   const [orderId, setOrderId] = useState('')
   const [isConfirmed, setIsConfirmed] = useState(false)
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const checkoutButtonRef = useRef<HTMLButtonElement>(null)
+  const orderFocusRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (isCartOpen) {
+      orderFocusRef.current = document.activeElement as HTMLElement
+      setTimeout(() => {
+        if (sneakers.length > 0 && checkoutButtonRef.current) {
+          checkoutButtonRef.current?.focus()
+        } else if (closeButtonRef.current) {
+          closeButtonRef.current?.focus()
+        }
+      }, 50)
+    } else {
+      orderFocusRef.current?.focus()
+      orderFocusRef.current = null
+    }
+  }, [isCartOpen, sneakers.length])
+
+  useEffect(() => {
+    if (!isCartOpen && isConfirmed) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsConfirmed(false)
+      setOrderId('')
+    }
+  }, [isCartOpen, isConfirmed])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' && sneakers.length > 0) {
+      e.preventDefault()
+      handleCheckout()
+    }
+  }
 
   const handleCloseModal = useCallback(() => {
     closeCart()
@@ -76,7 +111,12 @@ export const CartModal = () => {
 
   return (
     <div className={styles.overlay} onClick={handleCloseModal}>
-      <div role='dialog' aria-modal='true' className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div
+        onKeyDown={handleKeyDown}
+        role='dialog'
+        aria-modal='true'
+        className={styles.modal}
+        onClick={(e) => e.stopPropagation()}>
         {isConfirmed ? (
           <OrderMessage orderId={orderId} onClose={handleCloseModal} onNavigateToOrders={onNavigateToOrders} />
         ) : (
@@ -88,7 +128,11 @@ export const CartModal = () => {
               <button aria-label='Очистить корзину' className={styles.trashCanButton} onClick={clearCart}>
                 <img className={styles.trashIcon} src={trashСan} alt='Очистить корзину' />
               </button>
-              <button aria-label='Закрыть корзину' className={styles.closeButton} onClick={handleCloseModal}>
+              <button
+                ref={closeButtonRef}
+                aria-label='Закрыть корзину'
+                className={styles.closeButton}
+                onClick={handleCloseModal}>
                 ✕
               </button>
             </div>
@@ -125,7 +169,11 @@ export const CartModal = () => {
                 <div className={styles.footer}>
                   <span className={styles.total}>Налог 5%: {formatPrice(tax)}</span>
                   <span className={styles.total}>Итого: {formatPrice(total)}</span>
-                  <button aria-label='Оформить заказ' onClick={handleCheckout} className={styles.checkoutBtn}>
+                  <button
+                    ref={checkoutButtonRef}
+                    aria-label='Оформить заказ'
+                    onClick={handleCheckout}
+                    className={styles.checkoutBtn}>
                     Оформить заказ
                   </button>
                 </div>

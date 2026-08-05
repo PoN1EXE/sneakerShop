@@ -23,7 +23,7 @@ export const SneakerCard = ({ sneaker, isFavorite, isInCart, onToggleFavorite, o
           aria-label='Добавить в избранное'
           onClick={() => onToggleFavorite(sneaker.id)}
           className={`${styles.buttonFav} ${isFavorite ? styles.active : ''}`}>
-          <img className={styles.actionIcon} src={isFavorite ? filledHeart : heartIcon} alt='В избранное' />
+          <img className={styles.actionIcon} src={isFavorite ? filledHeart : heartIcon} alt='Добавить в избранное' />
         </button>
       </div>
 

@@ -1,6 +1,6 @@
 import { useShallow } from 'zustand/shallow'
 import { useUserStore } from '../../store/userStore'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { User } from '../../store/userStore'
 import styles from './ProfileModal.module.scss'
 
@@ -13,13 +13,42 @@ export const ProfileModal = () => {
       updateUser: state.updateUser,
     }))
   )
+  const inputNameRef = useRef<HTMLInputElement>(null)
+  const inputPhoneRef = useRef<HTMLInputElement>(null)
+  const inputEmailRef = useRef<HTMLInputElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   const [formData, setFormData] = useState(user)
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFormData(user)
-  }, [user, isOpen])
+    if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFormData(user)
+      previousFocusRef.current = document.activeElement as HTMLElement
+      setTimeout(() => {
+        inputNameRef.current?.focus()
+      }, 50)
+    } else {
+      previousFocusRef.current?.focus()
+      previousFocusRef.current = null
+    }
+  }, [isOpen, user])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+
+      const activeElement = document.activeElement
+
+      if (activeElement === inputNameRef.current) {
+        inputPhoneRef.current?.focus()
+      } else if (activeElement === inputPhoneRef.current) {
+        inputEmailRef.current?.focus()
+      } else if (activeElement === inputEmailRef.current) {
+        handleSaveData()
+      }
+    }
+  }
 
   const handleChange = (field: keyof User) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [field]: e.target.value })
@@ -58,6 +87,8 @@ export const ProfileModal = () => {
         <div className={styles.formGroup}>
           <label>Имя</label>
           <input
+            onKeyDown={handleKeyDown}
+            ref={inputNameRef}
             type='text'
             value={formData.name}
             onChange={handleChange('name')}
@@ -69,6 +100,8 @@ export const ProfileModal = () => {
         <div className={styles.formGroup}>
           <label>Номер телефона</label>
           <input
+            onKeyDown={handleKeyDown}
+            ref={inputPhoneRef}
             type='text'
             value={formData.phone}
             onChange={handleChange('phone')}
@@ -80,6 +113,8 @@ export const ProfileModal = () => {
         <div className={styles.formGroup}>
           <label>Email</label>
           <input
+            onKeyDown={handleKeyDown}
+            ref={inputEmailRef}
             type='text'
             value={formData.email}
             onChange={handleChange('email')}
